@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babeboo Login 💖</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 350px;
+            transition: all 0.3s ease;
+        }
+        h1 {
+            color: #ff4d4d;
+            font-size: 24px;
+        }
+        input {
+            padding: 12px;
+            width: 100%;
+            border: 2px solid #ff4d4d;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: center;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            transition: 0.3s ease;
+        }
+        button:hover {
+            background-color: #cc0000;
+        }
+        .heart-animation {
+            position: absolute;
+            color: #ff4d4d;
+            font-size: 24px;
+            animation: floatUp 3s linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-200px); opacity: 0; }
+        }
+        .hidden {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                max-width: 90%;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+            input {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+                max-width: 95%;
+            }
+            h1 {
+                font-size: 18px;
+            }
+            button {
+                font-size: 13px;
+                padding: 8px;
+            }
+            input {
+                font-size: 13px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💖 Welcome My Love 💖</h1>
+        <p>ใส่รหัสผ่านเพื่อเข้าสู่หัวใจเค้า แฮร่💘</p>
+        <input type="password" id="password" placeholder="Enter your love code" oninput="showHeart()">
+        <br>
+        <button onclick="checkPassword()">💘 ล็อกอิน</button>
+        <p id="message" class="hidden"></p>
+    </div>
+
+    <audio id="title1" loop>
+        <source src="title1.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="success-sound">
+        <source src="success.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="error-sound">
+        <source src="error.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.getElementById("title1").play(title1.mp3);
+        
+        function checkPassword() {
+            let password = document.getElementById("password").value;
+            let message = document.getElementById("message");
+
+            if (password === "050804") {
+                message.textContent = "💖 เข้าสู่ระบบสำเร็จ! ไปดูกันเลยไอ่อ้วนนน 💖";
+                message.style.color = "green";
+                document.getElementById("success-sound").play();
+
+                setTimeout(() => {
+                    window.location.href = "main.html";
+                }, 3000);
+            } else {
+                message.textContent = "💔 รหัสผิด! ลองใหม่อีกครั้งนะ ไอ่อ้วน 💔";
+                message.style.color = "red";
+                document.getElementById("error-sound").play();
+            }
+
+            message.classList.remove("hidden");
+        }
+
+
+        function showHeart() {
+            let heart = document.createElement("div");
+            heart.classList.add("heart-animation");
+            heart.textContent = "❤️";
+            document.body.appendChild(heart);
+            heart.style.left = Math.random() * window.innerWidth + "px";
+            heart.style.top = window.innerHeight + "px";
+            setTimeout(() => heart.remove(), 3000);
+        }
+    </script>
+</body>
+</html>

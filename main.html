@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ของขวัญวันวาเลนไทน์ 💖</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #ffe6e6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 500px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            color: #ff4d4d;
+            font-size: 24px;
+        }
+        button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin: 5px;
+            width: 100%;
+            max-width: 300px;
+        }
+        button:hover {
+            background-color: #cc0000;
+        }
+        #current-song {
+            font-size: 18px;
+            color: #d6336c;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        #love-message {
+            font-size: 18px;
+            color: #d6336c;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        img#album-cover {
+            width: 100%;
+            max-width: 250px;
+            border-radius: 10px;
+            display: block;
+            margin: 20px auto;
+        }
+        .dark-mode {
+            background-color: #222;
+            color: white;
+        }
+
+        .dark-mode button {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            #current-song, #love-message {
+                font-size: 16px;
+            }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                max-width: 600px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            button {
+                font-size: 15px;
+                padding: 12px;
+            }
+
+            #current-song, #love-message {
+                font-size: 18px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>💖 Happy Valentine's Day Babeboo 💖</h1>
+        <p>กดปุ่มเพื่อเล่นเพลงรักเพราะ ๆ และ อ่านข้อความหวาน ๆ จากเค้า 💕</p>
+
+        <button onclick="toggleMusic()">🎵 เล่น / หยุดเพลง</button>
+
+        <button onclick="changeSong()">🔄 เปลี่ยนเพลง</button>
+
+        <button onclick="toggleShuffle()">🔀 สลับเพลงแบบสุ่ม</button>
+
+        <button onclick="previousSong()">⏮️ เล่นเพลงก่อนหน้า</button>
+
+        <button onclick="toggleRepeat()">🔁 เล่นซ้ำ: ปิด</button>
+
+        <p id="current-song">🎶 รอฟังเพลงน่ารัก ๆ ได้เลย:P - </p>
+
+        <img id="album-cover" src="" alt="Album Cover" width="200" style="border-radius: 10px; margin: 20px;">
+
+        <p id="time-left">⏳ เวลาที่เหลือ: --:--</p>
+
+        <button onclick="showLoveMessage()">💌 คลิกดูข้อความหวาน ๆ แบบมดขึ้น</button>
+        <p id="love-message">💖 แฮร่ รู้ว่ามันน่ารักไม่ต้องเขินนะ -////- 💖</p>
+
+        <audio id="loveSong"></audio>
+
+    </div>
+
+    <script>
+        let songs = [
+            { title: " รักแรกพบ", file: "song1.mp3", cover: "cover1.jpg" },
+            { title: " เพลงรักเพลงแรก", file: "song2.mp3", cover: "cover2.jpg" },
+            { title: " บังเอิญพบทานตะวัน", file: "song3.mp3", cover: "cover3.jpg" },
+            { title: " เหมือนเคย", file: "song4.mp3", cover: "cover4.jpg" },
+            { title: " ธรรมดาที่แสนพิเศษ", file: "song5.mp3", cover: "cover5.jpg" },
+            { title: " Her", file: "song6.mp3", cover: "cover6.jpg" },
+            { title: " ดาวหางฮัลเลย์", file: "song7.mp3", cover: "cover7.jpg" },
+            { title: " รอยยิ้ม", file: "song8.mp3", cover: "cover8.jpg" },
+            { title: " ที่รัก(เธอ)", file: "song9.mp3", cover: "cover9.jpg" },
+            { title: " จีบ(May I _)", file: "song10.mp3", cover: "cover10.jpg" },
+            { title: " ลูกอม", file: "song11.mp3", cover: "cover11.jpg" },
+            { title: " ต่อจากนี้เพลงรักทุกเพลงจะเป็นของเธอเท่านั้น", file: "song12.mp3", cover: "cover12.jpg" },
+            { title: " แค่มีเธอไปเดินเตะคลื่นทะเลด้วยกัน", file: "song13.mp3", cover: "cover13.jpg" },
+            { title: " ปีนี้ไม่ต้องเหงาคนเดียวแล้วโว้ย", file: "song14.mp3", cover: "cover14.jpg" },
+            { title: " เพลงรัก", file: "song15.mp3", cover: "cover15.jpg" },
+            { title: " คลั่งเธอ(Dopamine)", file: "song16.mp3", cover: "cover16.jpg" },
+            { title: " Honeymoon", file: "song17.mp3", cover: "cover17.jpg" },
+            { title: " แฟน", file: "song18.mp3", cover: "cover18.jpg" },
+            { title: " CINDERELLA", file: "song19.mp3", cover: "cover19.jpg" },
+            { title: " เวลาขับรถ", file: "song20.mp3", cover: "cover20.jpg" },
+            { title: " Melbourne", file: "song21.mp3", cover: "cover21.jpg" },
+            { title: " Yours Ever", file: "song22.mp3", cover: "cover22.jpg" },
+            { title: " Proud", file: "song23.mp3", cover: "cover23.jpg" },
+            { title: " The Trouble is.. ปัญหาของฉัน", file: "song24.mp3", cover: "cover24.jpg" },
+            { title: " หมดนี้ให้เธอ", file: "song25.mp3", cover: "cover25.jpg" },
+            { title: " ใจเดียว", file: "song26.mp3", cover: "cover26.jpg" },
+            { title: " Take you to the moon", file: "song27.mp3", cover: "cover27.jpg" },
+            { title: " ยิ้มก็พอ", file: "song28.mp3", cover: "cover28.jpg" },
+            { title: " รักเธอ", file: "song29.mp3", cover: "cover29.jpg" },
+            { title: " Onlyfan", file: "song30.mp3", cover: "cover30.jpg" },
+            { title: " Serendipity", file: "song31.mp3", cover: "cover31.jpg" },
+            { title: " This Time", file: "song32.mp3", cover: "cover32.jpg" },
+            { title: " P.S. I LOVE YOU", file: "song33.mp3", cover: "cover33.jpg" },
+            { title: " Roses", file: "song34.mp3", cover: "cover34.jpg" },
+            { title: " double take", file: "song35.mp3", cover: "cover35.jpg" },
+            { title: " Ride", file: "song36.mp3", cover: "cover36.jpg" },
+            { title: " Prettiest To Me", file: "song37.mp3", cover: "cover37.jpg" },
+            { title: " เวลาเธอยิ้ม", file: "song38.mp3", cover: "cover38.jpg" },
+            { title: " จีบอยู่เผื่อไม่รู้(How cute!)", file: "song39.mp3", cover: "cover39.jpg" },
+            { title: " ตั้งใจรัก(happy accident)", file: "song40.mp3", cover: "cover40.jpg" },
+            { title: " Lost Jigsaw", file: "song41.mp3", cover: "cover41.jpg" },
+            { title: " หมวกเมฆสีรุ้ง", file: "song42.mp3", cover: "cover42.jpg" },
+            { title: " ถามดาว", file: "song43.mp3", cover: "cover43.jpg" },
+            { title: " เธอไม่ต้องน่ารักทุกวันก็ได้นะ", file: "song44.mp3", cover: "cover44.jpg" },
+            { title: " ยินดี", file: "song45.mp3", cover: "cover45.jpg" },
+            { title: " หน้าร้อน(SUMMER)", file: "song46.mp3", cover: "cover46.jpg" },
+            { title: " จันทร์อังคารพุธพฤหัสศุกร์เสาร์อาทิตย์(Everyday)", file: "song47.mp3", cover: "cover47.jpg" },
+            { title: " ความรักกำลังก่อตัว", file: "song48.mp3", cover: "cover48.jpg" },
+            { title: " โต๊ะริม(melt)", file: "song49.mp3", cover: "cover49.jpg" },
+            { title: " เขตห้ามหวง", file: "song50.mp3", cover: "cover50.jpg" },
+            { title: " เธอเหมือนเดือนกุมภา", file: "song51.mp3", cover: "cover51.jpg" },
+            { title: " ABC", file: "song52.mp3", cover: "cover52.jpg" },
+            { title: " รักเธอไปทุกวัน", file: "song53.mp3", cover: "cover53.jpg" },
+            { title: " น้ำหอม", file: "song54.mp3", cover: "cover54.jpg" },
+            { title: " my daisy", file: "song55.mp3", cover: "cover55.jpg" }
+
+        ];
+
+        let currentSongIndex = 0;
+        let audio = document.getElementById("loveSong");
+        let songTitle = document.getElementById("current-song");
+
+        function toggleMusic() {
+            if (!audio.src) {
+                loadSong(currentSongIndex);
+            }
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+
+        function changeSong() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            loadSong(currentSongIndex);
+            audio.play();
+        }
+
+        function loadSong(index) {
+            let song = songs[index];
+            if (song) {
+                audio.src = song.file;
+                audio.load();
+                songTitle.textContent = "🎶 กำลังเล่น: " + song.title;
+
+                document.getElementById("album-cover").src = song.cover;
+            }
+        }
+
+        function showLoveMessage() {
+            const messages = [
+                "เค้ารักอ้วนมาก ๆ เลยนะ 💕",
+                "เบ๊บอ้วนคือคนที่ทำให้เค้ามีความสุขมาก ๆ 💖",
+                "ทุกวันมีความหมายเพราะมีไอ่อ้วน แหวะ5555 😘",
+                "คนอะไรก็ไม่รู้สะดุดตาตั้งตาวันแรก ❤️",
+                "ถ้าไม่ไปซ้อมทีมหญิงวันนั้นก็ไม่ได้เจออ้วนนะเนี่ย ได้บังบอลให้อ้วนด้วยกลัวลูกลอยมาหา 💞",
+                "เค้าแอบมองอ้วนนะช่วงที่อ้วนทำงาน แต่ก็ไม่พูดหรอกเพราะหลบมุมอยู่ 😊",
+                "ขอบคุณนะที่ไปเที่ยวด้วยกันก่อนเค้าบินกลับ ฟินมากเลยอ้วน 🌹",
+                "เป็นห่วงอ้วนนะ ถึงจะรู้ว่าอ้วนดูแลตัวเองได้ แต่ก็อดห่วงไม่ได้อยู่ดี เข้าใจไหมอ้วน 💗",
+                "อยู่ด้วยกันแบบนี้ไปนาน ๆ นะ 💑",
+                "บอกรักกันทุกวันนะอ้วน 💖",
+                "I love you babeboo💖",
+                "💌 Frohen Valentinstag, mein Schatz! Ich liebe dich von ganzem Herzen.",
+                "💌 Avec toi, chaque jour est la Saint-Valentin.",
+                "💘 너와 함께하는 모든 순간이 특별해. 사랑해!",
+                "💕 君がいるから、毎日が幸せだよ。一生そばにいるよ。"
+            ];
+            let randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById("love-message").textContent = randomMessage;
+        }
+
+        audio.addEventListener("loadedmetadata", function() {
+            updateTimeLeft();
+});
+
+        function updateTimeLeft() {
+            if (!isNaN(audio.duration) && !isNaN(audio.currentTime)) {
+                let timeLeft = audio.duration - audio.currentTime;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = Math.floor(timeLeft % 60);
+                document.getElementById("time-left").textContent = `⏳ เวลาที่เหลือ: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+}
+
+        audio.addEventListener("timeupdate", updateTimeLeft);
+
+        audio.addEventListener("ended", function() {
+            changeSong();
+});
+
+        let isShuffle = false;
+
+        function toggleShuffle() {
+            isShuffle = !isShuffle;
+            alert(isShuffle ? "🔀 โหมดสุ่มเปิดใช้งาน!" : "🔀 โหมดสุ่มปิดแล้ว!");
+}
+
+        function changeSong() {
+            if (isShuffle) {
+                currentSongIndex = Math.floor(Math.random() * songs.length);
+            } else {
+                currentSongIndex = (currentSongIndex + 1) % songs.length;
+            }
+            loadSong(currentSongIndex);
+            audio.play();
+}
+
+        function previousSong() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            loadSong(currentSongIndex);
+            audio.play();
+}
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+}
+
+        let isRepeat = false;
+
+        function toggleRepeat() {
+            isRepeat = !isRepeat;
+            audio.loop = isRepeat;
+            document.querySelector("button[onclick='toggleRepeat()']").textContent = isRepeat ? "🔁 เล่นซ้ำ: เปิด" : "🔁 เล่นซ้ำ: ปิด";
+}
+
+    </script>
+
+</body>
+</html>
